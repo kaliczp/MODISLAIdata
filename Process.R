@@ -3,6 +3,7 @@ LAI.lt <- xts(LAI.loe$y, index(LAI.x))
 
 LAI.x1 <- LAI.x
 LAI.x1[LAI.x < LAI.lt-2] <- NA
+LAI.x1[LAI.x > LAI.lt+2] <- NA
 LAI.x1 <- na.approx(LAI.x1)
 
 monthly.max <- round(apply.monthly(LAI.x1,max),1)
