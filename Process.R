@@ -19,12 +19,12 @@ month.wsc <- ifelse(is.na(month.wsc),month.ws,month.wsc)
 LAI.df <- data.frame(month=month.wsc,max=as.numeric(monthly.max),
                      min=monthly.min,
                      mean=monthly.mean)
-LAI.df[LAI.df$month == "change",c(2,3)] <- NA
-LAI.df[LAI.df$month == "summer",3:4] <- NA
-LAI.df[LAI.df$month == "winter",c(2,4)] <- NA
+LAI.df[LAI.df$month == "change", c("max", "min")] <- NA
+LAI.df[LAI.df$month == "summer", c("min", "mean")] <- NA
+LAI.df[LAI.df$month == "winter", c("max", "mean")] <- NA
 
-LAI.monthraw <- ifelse(is.na(LAI.df[,2]),LAI.df[,3],LAI.df[,2])
-LAI.monthraw <- ifelse(is.na(LAI.monthraw),LAI.df[,4],LAI.monthraw)
+LAI.monthraw <- ifelse(is.na(LAI.df[, "max"]),LAI.df[, "min"],LAI.df[, "max"])
+LAI.monthraw <- ifelse(is.na(LAI.monthraw),LAI.df[, "mean"], LAI.monthraw)
 
 date.new <- seq(as.Date("2002-07-15"),as.Date("2021-12-15"),by="months")
 LAI.maxmin <- xts(LAI.monthraw,date.new)
