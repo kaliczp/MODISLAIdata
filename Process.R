@@ -16,12 +16,23 @@ month.ws <- ifelse(month.recod >= 10,"winter","summer")
 month.wsc <- ifelse(month.num == 4 | month.num == 10,"change",NA)
 month.wsc <- ifelse(is.na(month.wsc),month.ws,month.wsc)
 
-LAI.df <- data.frame(month=month.wsc,max=as.numeric(monthly.max),
+year.num <- as.numeric(format(index(monthly.max),"%Y"))
+
+LAI.df <- data.frame(year = year.num, month = month.wsc,max = as.numeric(monthly.max),
                      min=monthly.min,
                      mean=monthly.mean)
 LAI.df[LAI.df$month == "change", c("max", "min")] <- NA
 LAI.df[LAI.df$month == "summer", c("min", "mean")] <- NA
 LAI.df[LAI.df$month == "winter", c("max", "mean")] <- NA
+
+is.maxvalue <- !is.na(LAI.df$max)
+for(curr.year in LAI.df[1, "year"]:LAI.df[nrow(LAI.df), "year"])
+{
+    akt.max.idx <- which(LAI.df$year == curr.year & is.maxvalue)
+    akt.max <- LAI.df[akt.max.idx, "max"]
+    akt.order <- order(akt.max, decreasing = TRUE)
+    LAI.df[akt.max.idx, "max"] <- akt.max[akt.order]
+}
 
 LAI.monthraw <- ifelse(is.na(LAI.df[, "max"]),LAI.df[, "min"],LAI.df[, "max"])
 LAI.monthraw <- ifelse(is.na(LAI.monthraw),LAI.df[, "mean"], LAI.monthraw)
