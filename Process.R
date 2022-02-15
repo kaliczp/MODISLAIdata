@@ -43,7 +43,9 @@ LAI.maxmin <- xts(LAI.monthraw,date.new)
 ## Daily
 date.new <- seq(as.Date("2002-07-15"),as.Date("2021-12-15"),by="days")
 LAI.d <- xts(rep(NA,length(date.new)),date.new)
-LAI.d <- round(na.approx(merge.xts(LAI.d,LAI.maxmin)[,2]),1)
+LAI.d <- merge.xts(LAI.d,LAI.maxmin)[,2]
+LAI.d.spline <- na.spline(LAI.d)
+LAI.d.approx <- na.approx(LAI.d)
 
-LAI.spline <- smooth.spline(index(LAI.d), coredata(LAI.d))
-LAI.spline.xts <- xts(LAI.spline$y, index(LAI.d))
+LAI.spline <- smooth.spline(index(LAI.d.approx), coredata(LAI.d.approx))
+LAI.spline.xts <- xts(LAI.spline$y, index(LAI.d.approx))
