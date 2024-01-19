@@ -37,11 +37,11 @@ for(curr.year in LAI.df[1, "year"]:LAI.df[nrow(LAI.df), "year"])
 LAI.monthraw <- ifelse(is.na(LAI.df[, "max"]),LAI.df[, "min"],LAI.df[, "max"])
 LAI.monthraw <- ifelse(is.na(LAI.monthraw),LAI.df[, "mean"], LAI.monthraw)
 
-date.new <- seq(as.Date("2002-07-15"),as.Date("2021-12-15"),by="months")
+date.new <- seq(as.Date("2002-07-15"),as.Date("2023-08-17"),by="months")
 LAI.maxmin <- xts(LAI.monthraw,date.new)
 
 ## Daily
-date.new <- seq(as.Date("2002-07-15"),as.Date("2021-12-15"),by="days")
+date.new <- seq(as.Date("2002-07-15"),as.Date("2023-08-17"),by="days")
 LAI.d <- xts(rep(NA,length(date.new)),date.new)
 LAI.d <- merge.xts(LAI.d,LAI.maxmin)[,2]
 LAI.d.spline <- na.spline(LAI.d)
