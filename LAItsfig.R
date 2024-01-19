@@ -1,5 +1,5 @@
 
-year.lai <- as.Date(c("2002-07-04",paste0(2003:2021,"-01-01"),"2021-12-15"))
+year.lai <- as.Date(c("2002-07-04",paste0(2003:2023,"-01-01"),"2023-08-17"))
 
 lines(as.zoo(LAI.lt));lines(as.zoo(LAI.x1), col = 2)
 
@@ -16,4 +16,3 @@ axis.Date(1, at=c(year.lai[1]+85, year.lai[-1]+182), format="%Y", tcl=0)
 legend("topleft",c("Raw","Pre-filtered", "Smoothed"),ncol=2,bg="white", lwd=3, col=c("darkgrey","2","black"))
 box(lwd=2)
 dev.off()
-
